@@ -1,0 +1,23 @@
+﻿@using ShrtLy.Api.ViewModels
+@model List<LinkViewModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Shortened URL</th>
+            <th>Original URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var link in Model)
+        {
+            <tr>
+                <td><a href="@link.ShortUrl">@link.ShortUrl</a></td>
+                <td><a href="@link.Url">@link.Url</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

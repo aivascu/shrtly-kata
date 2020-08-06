@@ -1,0 +1,25 @@
+﻿@model ShortenModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="offset-2 col-8 text-center">
+        <h1 class="display-4">Shorten your URL</h1>
+        <form asp-action="Shorten" method="post">
+            <div class="input-group">
+                <input type="text" class="form-control" asp-for="Url" placeholder="Enter your URL" />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Shorten</button>
+                </div>
+            </div>
+        </form>
+        @if(TempData["ShortenedUrl"] != null)
+        {
+            <div class="alert alert-success mt-3">
+                Shortened URL: <a asp-action="Index" asp-route-id="@TempData["ShortenedUrl"]"
+                                  >@Url.ActionLink("Index", "Home", new {id = TempData["ShortenedUrl"]})</a>
+            </div>
+        }
+    </div>
+</div>
