@@ -1,28 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShrtLy.DAL
 {
     public class LinksRepository : ILinksRepository
     {
-        private readonly ShrtLyContext context;
+        private readonly ShrtLyContext _context;
 
         public LinksRepository(ShrtLyContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
-        public int CreateLink(LinkEntity entity)
+        public async Task<int> CreateLink(LinkEntity entity)
         {
-            this.context.Add(entity);
-            this.context.SaveChanges();
+            await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
             return entity.Id;
         }
 
-        public IEnumerable<LinkEntity> GetAllLinks()
+        public async Task<IEnumerable<LinkEntity>> GetAllLinks()
         {
-            return this.context.Links;
+            return await _context.Links.ToListAsync();
+        }
+
+        public async Task<LinkEntity> GetLink(string url)
+        {
+            return await _context.Links.FirstOrDefaultAsync(l => l.ShortUrl == url);
         }
     }
 }

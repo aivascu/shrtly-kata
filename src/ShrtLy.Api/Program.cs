@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using ShrtLy.DAL;
 
 namespace ShrtLy.Api
 {
@@ -13,6 +10,13 @@ namespace ShrtLy.Api
     {
         public static void Main(string[] args)
         {
+            var configuration = new ConfigurationBuilder()
+                .Configure<Startup>(Directory.GetCurrentDirectory())
+                .Build();
+
+            DatabaseInitializer.ApplyMigrations<ShrtLyContext>(
+                configuration.GetConnectionString("ShrtLy"));
+
             CreateHostBuilder(args).Build().Run();
         }
 
