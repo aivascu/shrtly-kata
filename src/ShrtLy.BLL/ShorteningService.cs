@@ -3,21 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ShrtLy.BLL
 {
     public class ShorteningService : IShorteningService
     {
-        private readonly ILinksRepository repository;
+        private readonly ILinksRepository _repository;
 
         public ShorteningService(ILinksRepository repository)
         {
-            this.repository = repository;
+            _repository = repository;
         }
 
-        public string ProcessLink(string url)
+        public async Task<string> ProcessLink(string url)
         {
-            var entity = this.repository.GetAllLinks().FirstOrDefault(x => x.ShortUrl == url);
+            var entity = await _repository.GetLink(url);
             if (entity == null)
             {
                 Thread.Sleep(1);//make everything unique while looping
@@ -48,7 +49,7 @@ namespace ShrtLy.BLL
                     Url = url
                 };
 
-                repository.CreateLink(link);
+                await _repository.CreateLink(link);
 
                 return link.ShortUrl;
             }
@@ -58,9 +59,10 @@ namespace ShrtLy.BLL
             }
         }
 
-        public IEnumerable<LinkDto> GetShortLinks()
+        public async Task<IEnumerable<LinkDto>> GetShortLinks()
         {
-            return repository.GetAllLinks().Select(element => new LinkDto
+            var linkEntities = await _repository.GetAllLinks();
+            return linkEntities.Select(element => new LinkDto
             {
                 Id = element.Id,
                 ShortUrl = element.ShortUrl,

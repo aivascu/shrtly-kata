@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ShrtLy.DAL
 {
     public interface ILinksRepository
     {
-        int CreateLink(LinkEntity entity);
-        IEnumerable<LinkEntity> GetAllLinks();
+        Task<int> CreateLink(LinkEntity entity);
+        Task<IEnumerable<LinkEntity>> GetAllLinks();
+        Task<LinkEntity> GetLink(string url);
     }
 }

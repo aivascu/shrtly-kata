@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShrtLy.DAL
 {
@@ -11,16 +13,21 @@ namespace ShrtLy.DAL
             _context = context;
         }
 
-        public int CreateLink(LinkEntity entity)
+        public async Task<int> CreateLink(LinkEntity entity)
         {
-            _context.Add(entity);
-            _context.SaveChanges();
+            await _context.AddAsync(entity);
+            await _context.SaveChangesAsync();
             return entity.Id;
         }
 
-        public IEnumerable<LinkEntity> GetAllLinks()
+        public async Task<IEnumerable<LinkEntity>> GetAllLinks()
         {
-            return _context.Links;
+            return await _context.Links.ToListAsync();
+        }
+
+        public async Task<LinkEntity> GetLink(string url)
+        {
+            return await _context.Links.FirstOrDefaultAsync(l => l.ShortUrl == url);
         }
     }
 }

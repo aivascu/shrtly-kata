@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ShrtLy.BLL
 {
     public interface IShorteningService
     {
-        IEnumerable<LinkDto> GetShortLinks();
-        string ProcessLink(string url);
+        Task<IEnumerable<LinkDto>> GetShortLinks();
+        Task<string> ProcessLink(string url);
     }
 }

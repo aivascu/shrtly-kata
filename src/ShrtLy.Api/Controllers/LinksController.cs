@@ -3,6 +3,7 @@ using ShrtLy.Api.ViewModels;
 using ShrtLy.BLL;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ShrtLy.Api.Controllers
 {
@@ -18,15 +19,16 @@ namespace ShrtLy.Api.Controllers
         }
 
         [HttpGet]
-        public string GetShortLink(string url)
+        public async Task<string> GetShortLink(string url)
         {
-            return service.ProcessLink(url);
+            return await service.ProcessLink(url);
         }
 
         [HttpGet("all")]
-        public IEnumerable<LinkViewModel> GetShortLinks()
+        public async Task<IEnumerable<LinkViewModel>> GetShortLinks()
         {
-            return service.GetShortLinks().Select(e => 
+            var shortLinks = await service.GetShortLinks();
+            return shortLinks.Select(e => 
                 new LinkViewModel
                 {
                     Id = e.Id, 
