@@ -17,27 +17,27 @@ namespace ShrtLy.BLL
 
         public string ProcessLink(string url)
         {
-            var entity = this.repository.GetAllLinks().Where(x => x.Url == url).FirstOrDefault();
+            var entity = this.repository.GetAllLinks().FirstOrDefault(x => x.ShortUrl == url);
             if (entity == null)
             {
                 Thread.Sleep(1);//make everything unique while looping
-                long ticks = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0))).TotalMilliseconds;//EPOCH
-                char[] baseChars = new char[] { '0','1','2','3','4','5','6','7','8','9',
+                var ticks = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0))).TotalMilliseconds;//EPOCH
+                var baseChars = new char[] { '0','1','2','3','4','5','6','7','8','9',
             'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
             'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x'};
 
-                int i = 32;
-                char[] buffer = new char[i];
-                int targetBase = baseChars.Length;
+                var i = 32;
+                var buffer = new char[i];
+                var targetBase = baseChars.Length;
 
                 do
                 {
                     buffer[--i] = baseChars[ticks % targetBase];
-                    ticks = ticks / targetBase;
+                    ticks /= targetBase;
                 }
                 while (ticks > 0);
 
-                char[] result = new char[32 - i];
+                var result = new char[32 - i];
                 Array.Copy(buffer, i, result, 0, 32 - i);
 
                 var shortUrl = new string(result);
@@ -60,21 +60,12 @@ namespace ShrtLy.BLL
 
         public IEnumerable<LinkDto> GetShortLinks()
         {
-            var dtos = repository.GetAllLinks().ToList();
-
-            List<LinkDto> viewModels = new List<LinkDto>();
-            for (int i = 0; i < dtos.Count(); i++)
+            return repository.GetAllLinks().Select(element => new LinkDto
             {
-                var element = dtos.ElementAt(i);
-                viewModels.Add(new LinkDto
-                {
-                    Id = element.Id,
-                    ShortUrl = element.ShortUrl,
-                    Url = element.Url
-                });
-            }
-
-            return viewModels;
+                Id = element.Id,
+                ShortUrl = element.ShortUrl,
+                Url = element.Url
+            });
         }
     }
 }

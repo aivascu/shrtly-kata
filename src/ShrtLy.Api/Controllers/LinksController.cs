@@ -26,20 +26,13 @@ namespace ShrtLy.Api.Controllers
         [HttpGet("all")]
         public IEnumerable<LinkViewModel> GetShortLinks()
         {
-            var dtos = service.GetShortLinks();
-
-            List<LinkViewModel> viewModels = new List<LinkViewModel>();
-            for (int i = 0; i < dtos.Count(); i++)
-            {
-                var element = dtos.ElementAt(i);
-                viewModels.Add(new LinkViewModel {
-                    Id = element.Id,
-                    ShortUrl = element.ShortUrl,
-                    Url = element.Url
-                });
-            }
-
-            return viewModels;
+            return service.GetShortLinks().Select(e => 
+                new LinkViewModel
+                {
+                    Id = e.Id, 
+                    ShortUrl = e.ShortUrl, 
+                    Url = e.Url
+                }).ToList();
         }
     }
 }

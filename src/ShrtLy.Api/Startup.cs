@@ -1,16 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using ShrtLy.BLL;
 using ShrtLy.DAL;
 
@@ -29,7 +22,7 @@ namespace ShrtLy.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<ShrtLyContext>(opt => opt.UseSqlServer("Data Source=localhost;Initial Catalog=ShrtLy;Integrated Security=True"));
+            services.AddDbContext<ShrtLyContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ShrtLy")));
             services.AddTransient<IShorteningService, ShorteningService>();
             services.AddTransient<ILinksRepository, LinksRepository>();
             services.AddTransient<ShrtLyContext>();
