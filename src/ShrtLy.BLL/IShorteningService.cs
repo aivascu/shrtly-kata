@@ -5,8 +5,8 @@ namespace ShrtLy.BLL
 {
     public interface IShorteningService
     {
-        Task<IEnumerable<LinkDto>> GetShortLinksAsync();
+        Task<IEnumerable<LinkDto>> GetLinksAsync();
 
-        Task<string> ProcessLinkAsync(string url);
+        Task<LinkDto> GenerateLinkAsync(string url);
     }
 }

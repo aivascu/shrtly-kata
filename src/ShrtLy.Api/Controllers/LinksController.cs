@@ -19,15 +19,15 @@ namespace ShrtLy.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<string> GetShortLink(string url)
+        public async Task<LinkDto> GetShortLink(string url)
         {
-            return await service.ProcessLinkAsync(url);
+            return await service.GenerateLinkAsync(url);
         }
 
         [HttpGet("all")]
         public async Task<IEnumerable<LinkViewModel>> GetShortLinks()
         {
-            var dtos = await service.GetShortLinksAsync();
+            var dtos = await service.GetLinksAsync();
 
             List<LinkViewModel> viewModels = new List<LinkViewModel>();
             for (int i = 0; i < dtos.Count(); i++)
