@@ -26,7 +26,7 @@ namespace ShrtLy.Api
             services.AddControllers();
             services.AddDbContext<ShrtLyContext>(options => options.UseSqlServer(this.GetConnectionString()));
             services.AddTransient<IShorteningService, ShorteningService>();
-            services.AddTransient<IRepository<Link>, LinksRepository>();
+            services.AddTransient<IRepository<Link>, LinkRepository>();
             services.AddTransient<ShrtLyContext>();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();

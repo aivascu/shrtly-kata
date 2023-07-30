@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ShrtLy.DAL.Repositories
 {
-    public class LinksRepository : IRepository<Link>
+    public class LinkRepository : IRepository<Link>
     {
         private readonly ShrtLyContext context;
 
-        public LinksRepository(ShrtLyContext context)
+        public LinkRepository(ShrtLyContext context)
         {
             this.context = context;
         }
