@@ -9,6 +9,6 @@ namespace ShrtLy.DAL
         {
         }
 
-        public DbSet<LinkEntity> Links { get; set; }
+        public DbSet<Link> Links { get; set; }
     }
 }

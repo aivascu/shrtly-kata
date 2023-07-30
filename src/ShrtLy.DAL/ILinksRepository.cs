@@ -4,7 +4,7 @@ namespace ShrtLy.DAL
 {
     public interface ILinksRepository
     {
-        int CreateLink(LinkEntity entity);
-        IEnumerable<LinkEntity> GetAllLinks();
+        int CreateLink(Link entity);
+        IEnumerable<Link> GetAllLinks();
     }
 }

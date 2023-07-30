@@ -13,14 +13,14 @@ namespace ShrtLy.DAL
             this.context = context;
         }
 
-        public int CreateLink(LinkEntity entity)
+        public int CreateLink(Link entity)
         {
             this.context.Add(entity);
             this.context.SaveChanges();
             return entity.Id;
         }
 
-        public IEnumerable<LinkEntity> GetAllLinks()
+        public IEnumerable<Link> GetAllLinks()
         {
             return this.context.Links;
         }

@@ -42,7 +42,7 @@ namespace ShrtLy.BLL
 
                 var shortUrl = new string(result);
 
-                var link = new LinkEntity
+                var link = new Link
                 {
                     ShortUrl = shortUrl,
                     Url = url

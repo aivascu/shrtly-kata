@@ -1,6 +1,6 @@
 ﻿namespace ShrtLy.DAL
 {
-    public class LinkEntity : Entity
+    public class Link : Entity
     {
         public string Url { get; set; }
         public string ShortUrl { get; set; }
