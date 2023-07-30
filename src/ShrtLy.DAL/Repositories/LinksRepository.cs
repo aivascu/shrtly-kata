@@ -1,11 +1,9 @@
-﻿using System.Collections;
+﻿using ShrtLy.DAL.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using ShrtLy.DAL.Entities;
 
 namespace ShrtLy.DAL.Repositories
 {
-    public class LinksRepository : ILinksRepository
+    public class LinksRepository : IRepository<Link>
     {
         private readonly ShrtLyContext context;
 
@@ -14,14 +12,14 @@ namespace ShrtLy.DAL.Repositories
             this.context = context;
         }
 
-        public int CreateLink(Link entity)
+        public int Create(Link entity)
         {
             context.Add(entity);
             context.SaveChanges();
             return entity.Id;
         }
 
-        public IEnumerable<Link> GetAllLinks()
+        public IEnumerable<Link> GetAll()
         {
             return context.Links;
         }

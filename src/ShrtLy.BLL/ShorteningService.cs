@@ -9,16 +9,16 @@ namespace ShrtLy.BLL
 {
     public class ShorteningService : IShorteningService
     {
-        private readonly ILinksRepository repository;
+        private readonly IRepository<Link> repository;
 
-        public ShorteningService(ILinksRepository repository)
+        public ShorteningService(IRepository<Link> repository)
         {
             this.repository = repository;
         }
 
         public string ProcessLink(string url)
         {
-            var entity = this.repository.GetAllLinks().Where(x => x.Url == url).FirstOrDefault();
+            var entity = this.repository.GetAll().Where(x => x.Url == url).FirstOrDefault();
             if (entity == null)
             {
                 Thread.Sleep(1);//make everything unique while looping
@@ -49,7 +49,7 @@ namespace ShrtLy.BLL
                     Url = url
                 };
 
-                repository.CreateLink(link);
+                repository.Create(link);
 
                 return link.ShortUrl;
             }
@@ -61,7 +61,7 @@ namespace ShrtLy.BLL
 
         public IEnumerable<LinkDto> GetShortLinks()
         {
-            var dtos = repository.GetAllLinks().ToList();
+            var dtos = repository.GetAll().ToList();
 
             List<LinkDto> viewModels = new List<LinkDto>();
             for (int i = 0; i < dtos.Count(); i++)

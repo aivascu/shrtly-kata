@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ShrtLy.BLL;
 using ShrtLy.DAL;
+using ShrtLy.DAL.Entities;
 using ShrtLy.DAL.Repositories;
 
 namespace ShrtLy.Api
@@ -25,7 +26,7 @@ namespace ShrtLy.Api
             services.AddControllers();
             services.AddDbContext<ShrtLyContext>(options => options.UseSqlServer(this.GetConnectionString()));
             services.AddTransient<IShorteningService, ShorteningService>();
-            services.AddTransient<ILinksRepository, LinksRepository>();
+            services.AddTransient<IRepository<Link>, LinksRepository>();
             services.AddTransient<ShrtLyContext>();
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen();
