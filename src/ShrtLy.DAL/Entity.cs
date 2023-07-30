@@ -2,7 +2,7 @@
 
 namespace ShrtLy.DAL
 {
-    public class Entity
+    public abstract class Entity
     {
         [Key]
         public int Id { get; set; }
