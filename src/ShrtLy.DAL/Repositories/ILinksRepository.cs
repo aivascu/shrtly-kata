@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ShrtLy.DAL.Entities;
 
-namespace ShrtLy.DAL
+namespace ShrtLy.DAL.Repositories
 {
     public interface ILinksRepository
     {

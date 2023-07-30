@@ -1,5 +1,5 @@
-﻿using ShrtLy.DAL;
-using ShrtLy.DAL.Entities;
+﻿using ShrtLy.DAL.Entities;
+using ShrtLy.DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

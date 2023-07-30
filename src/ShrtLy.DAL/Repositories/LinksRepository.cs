@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ShrtLy.DAL.Entities;
 
-namespace ShrtLy.DAL
+namespace ShrtLy.DAL.Repositories
 {
     public class LinksRepository : ILinksRepository
     {
@@ -16,14 +16,14 @@ namespace ShrtLy.DAL
 
         public int CreateLink(Link entity)
         {
-            this.context.Add(entity);
-            this.context.SaveChanges();
+            context.Add(entity);
+            context.SaveChanges();
             return entity.Id;
         }
 
         public IEnumerable<Link> GetAllLinks()
         {
-            return this.context.Links;
+            return context.Links;
         }
     }
 }
