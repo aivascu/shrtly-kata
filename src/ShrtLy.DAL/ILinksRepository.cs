@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ShrtLy.DAL.Entities;
 
 namespace ShrtLy.DAL
 {
