@@ -1,5 +1,7 @@
-﻿using ShrtLy.DAL.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ShrtLy.DAL.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ShrtLy.DAL.Repositories
 {
@@ -12,16 +14,22 @@ namespace ShrtLy.DAL.Repositories
             this.context = context;
         }
 
-        public int Create(Link entity)
+        public async Task<int> CreateAsync(Link link)
         {
-            context.Add(entity);
-            context.SaveChanges();
-            return entity.Id;
+            await context.AddAsync(link);
+            await context.SaveChangesAsync();
+
+            return link.Id;
         }
 
-        public IEnumerable<Link> GetAll()
+        public async Task<IEnumerable<Link>> GetAllAsync()
         {
-            return context.Links;
+            return await context.Links.ToListAsync();
+        }
+
+        public async Task<Link> GetByUrl(string url)
+        {
+            return await context.Links.FirstOrDefaultAsync(x => x.Url == url);
         }
     }
 }

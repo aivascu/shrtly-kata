@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using ShrtLy.DAL.Entities;
 
 namespace ShrtLy.DAL.Repositories
 {
     public interface IRepository<T> where T : Entity
     {
-        int Create(T entity);
+        Task<int> CreateAsync(T entity);
 
-        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAllAsync();
+
+        Task<T> GetByUrl(string url);
     }
 }

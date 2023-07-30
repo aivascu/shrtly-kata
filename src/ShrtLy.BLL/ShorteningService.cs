@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ShrtLy.BLL
 {
@@ -16,9 +17,9 @@ namespace ShrtLy.BLL
             this.repository = repository;
         }
 
-        public string ProcessLink(string url)
+        public async Task<string> ProcessLinkAsync(string url)
         {
-            var entity = this.repository.GetAll().Where(x => x.Url == url).FirstOrDefault();
+            var entity = await this.repository.GetByUrl(url);
             if (entity == null)
             {
                 Thread.Sleep(1);//make everything unique while looping
@@ -49,7 +50,7 @@ namespace ShrtLy.BLL
                     Url = url
                 };
 
-                repository.Create(link);
+                await repository.CreateAsync(link);
 
                 return link.ShortUrl;
             }
@@ -59,9 +60,9 @@ namespace ShrtLy.BLL
             }
         }
 
-        public IEnumerable<LinkDto> GetShortLinks()
+        public async Task<IEnumerable<LinkDto>> GetShortLinksAsync()
         {
-            var dtos = repository.GetAll().ToList();
+            var dtos = await repository.GetAllAsync();
 
             List<LinkDto> viewModels = new List<LinkDto>();
             for (int i = 0; i < dtos.Count(); i++)
