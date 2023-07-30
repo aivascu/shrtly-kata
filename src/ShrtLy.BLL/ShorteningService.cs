@@ -22,7 +22,7 @@ namespace ShrtLy.BLL
             var foundLink = await this._linkRepository.GetByUrl(url);
             if (foundLink is not null)
             {
-                return this.MapLinkToDto(foundLink);
+                return this.MapLinkToLinkDto(foundLink);
             }
 
             var generatedLink = new Link
@@ -32,14 +32,15 @@ namespace ShrtLy.BLL
             };
             await _linkRepository.CreateAsync(generatedLink);
 
-            return this.MapLinkToDto(generatedLink);
+            return this.MapLinkToLinkDto(generatedLink);
         }
+
 
         public async Task<IEnumerable<LinkDto>> GetLinksAsync()
         {
             var links = await _linkRepository.GetAllAsync();
 
-            return links.Select(link => this.MapLinkToDto(link));
+            return links.Select(link => this.MapLinkToLinkDto(link));
         }
 
         private string GenerateShortUrl()
@@ -69,7 +70,7 @@ namespace ShrtLy.BLL
             return new string(result);
         }
 
-        private LinkDto MapLinkToDto(Link source)
+        private LinkDto MapLinkToLinkDto(Link source)
         {
             return new LinkDto
             {

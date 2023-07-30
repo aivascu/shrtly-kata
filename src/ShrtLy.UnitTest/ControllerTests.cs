@@ -54,7 +54,7 @@ namespace ShrtLy.UnitTest
         [Test]
         public async void GetShortLink_ProcessLinkHasBeenCalled()
         {
-            await controller.GetShortLink("http://google.com");
+            await controller.CreateLink("http://google.com");
 
             serviceMock.Verify(x => x.GenerateLinkAsync("http://google.com"), Times.Once);
         }
@@ -64,7 +64,7 @@ namespace ShrtLy.UnitTest
         {
             serviceMock.Setup(x => x.GetLinksAsync()).Returns(async () => await Task.Run(() => new List<LinkDto>()));
 
-            await controller.GetShortLinks();
+            await controller.ListLinks();
 
             serviceMock.Verify(x => x.GetLinksAsync(), Times.Once);
         }
@@ -74,7 +74,7 @@ namespace ShrtLy.UnitTest
         {
             serviceMock.Setup(x => x.GetLinksAsync()).Returns(async () => await Task.Run(() => new List<LinkDto>()));
 
-            await controller.GetShortLinks();
+            await controller.ListLinks();
 
             for (int i = 0; i < linkDtos.Count; i++)
             {

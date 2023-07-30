@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using ShrtLy.BLL;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,16 +19,20 @@ namespace ShrtLy.Api.Controllers
             this._shorteningService = service;
         }
 
-        [HttpGet]
-        public async Task<LinkDto> GetShortLink(string url)
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(LinkDto))]
+        public async Task<IActionResult> CreateLink(string url)
         {
-            return await _shorteningService.GenerateLinkAsync(url);
+            var createdLink = await _shorteningService.GenerateLinkAsync(url);
+            var uri = new Uri(HttpContext.Request.GetDisplayUrl()).GetLeftPart(UriPartial.Path) + "/" + createdLink.Id;
+            return Created(uri, createdLink);
         }
 
-        [HttpGet("all")]
-        public async Task<IEnumerable<LinkDto>> GetShortLinks()
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<LinkDto>))]
+        public async Task<IActionResult> ListLinks()
         {
-            return await _shorteningService.GetLinksAsync();
+            return Ok(await _shorteningService.GetLinksAsync());
         }
     }
 }
