@@ -1,7 +1,6 @@
 using Moq;
 using NUnit.Framework;
 using ShrtLy.Api.Controllers;
-using ShrtLy.Api.ViewModels;
 using ShrtLy.BLL;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,15 +12,15 @@ namespace ShrtLy.UnitTest
         public LinksController controller;
         public Mock<IShorteningService> serviceMock;
 
-        public static List<LinkViewModel> viewModels = new List<LinkViewModel>
+        public static List<LinkDto> viewModels = new List<LinkDto>
             {
-                new LinkViewModel
+                new LinkDto
                 {
                     Id = 1,
                     ShortUrl = "short-url-1",
                     Url = "url-1"
                 },
-                new LinkViewModel
+                new LinkDto
                 {
                     Id = 2,
                     ShortUrl = "short-url-2",
