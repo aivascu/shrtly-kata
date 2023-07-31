@@ -1,4 +1,4 @@
-﻿namespace ShrtLy.BLL
+﻿namespace ShrtLy.BLL.Dtos
 {
     public class LinkDto
     {

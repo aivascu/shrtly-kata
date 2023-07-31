@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ShrtLy.BLL.Dtos;
 
 namespace ShrtLy.BLL
 {

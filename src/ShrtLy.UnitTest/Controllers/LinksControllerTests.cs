@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using ShrtLy.Api.Controllers;
 using ShrtLy.BLL;
+using ShrtLy.BLL.Dtos;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
