@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShrtLy.DAL.Entities;
 
 namespace ShrtLy.DAL
 {
@@ -9,6 +10,6 @@ namespace ShrtLy.DAL
         {
         }
 
-        public DbSet<LinkEntity> Links { get; set; }
+        public DbSet<Link> Links { get; set; }
     }
 }
