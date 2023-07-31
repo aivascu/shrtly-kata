@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using ShrtLy.BLL;
 using ShrtLy.BLL.Dtos;
+using ShrtLy.BLL.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ShrtLy.BLL;
+using ShrtLy.BLL.Services;
 using ShrtLy.DAL;
 using ShrtLy.DAL.Entities;
 using ShrtLy.DAL.Repositories;

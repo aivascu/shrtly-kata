@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ShrtLy.BLL
+namespace ShrtLy.BLL.Services
 {
     public class ShorteningService : IShorteningService
     {
@@ -15,25 +15,25 @@ namespace ShrtLy.BLL
 
         public ShorteningService(IRepository<Link> repository)
         {
-            this._linkRepository = repository;
+            _linkRepository = repository;
         }
 
         public async Task<LinkDto> GenerateLinkAsync(string url)
         {
-            var foundLink = await this._linkRepository.GetByUrl(url);
+            var foundLink = await _linkRepository.GetByUrl(url);
             if (foundLink is not null)
             {
-                return this.MapLinkToLinkDto(foundLink);
+                return MapLinkToLinkDto(foundLink);
             }
 
             var generatedLink = new Link
             {
-                ShortUrl = this.GenerateShortUrl(),
+                ShortUrl = GenerateShortUrl(),
                 Url = url
             };
             await _linkRepository.CreateAsync(generatedLink);
 
-            return this.MapLinkToLinkDto(generatedLink);
+            return MapLinkToLinkDto(generatedLink);
         }
 
 
@@ -41,14 +41,14 @@ namespace ShrtLy.BLL
         {
             var links = await _linkRepository.GetAllAsync();
 
-            return links.Select(link => this.MapLinkToLinkDto(link));
+            return links.Select(link => MapLinkToLinkDto(link));
         }
 
         private string GenerateShortUrl()
         {
             Thread.Sleep(1); //make everything unique while looping
 
-            var ticks = (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0))).TotalMilliseconds;//EPOCH
+            var ticks = (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, 0)).TotalMilliseconds;//EPOCH
             var baseChars = new char[] {
                 '0','1','2','3','4','5','6','7','8','9',
                 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ShrtLy.BLL.Dtos;
 
-namespace ShrtLy.BLL
+namespace ShrtLy.BLL.Services
 {
     public interface IShorteningService
     {
