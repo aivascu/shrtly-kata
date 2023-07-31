@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using ShrtLy.Api.Controllers;
 using ShrtLy.BLL;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShrtLy.UnitTest
@@ -52,17 +55,29 @@ namespace ShrtLy.UnitTest
         }
 
         [Test]
-        public async void GetShortLink_ProcessLinkHasBeenCalled()
+        public async Task GetShortLink_ProcessLinkHasBeenCalled()
         {
+            this.controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new DefaultHttpContext()
+            };
+            this.controller.ControllerContext.HttpContext.Request.Scheme = "http";
+            this.controller.ControllerContext.HttpContext.Request.Host = new HostString("localhost", 5000);
+            this.controller.ControllerContext.HttpContext.Request.Path = "/api/links/";
+
+            this.serviceMock
+                .Setup(s => s.GenerateLinkAsync(It.IsAny<string>())).Returns(Task.FromResult(new LinkDto { Id = 1 }));
+
+
             await controller.CreateLink("http://google.com");
 
             serviceMock.Verify(x => x.GenerateLinkAsync("http://google.com"), Times.Once);
         }
 
         [Test]
-        public async void GetShortLink_ProcessLinksHasBeenCalled()
+        public async Task GetShortLink_ProcessLinksHasBeenCalled()
         {
-            serviceMock.Setup(x => x.GetLinksAsync()).Returns(async () => await Task.Run(() => new List<LinkDto>()));
+            serviceMock.Setup(x => x.GetLinksAsync()).Returns(Task.FromResult(new List<LinkDto>().AsEnumerable()));
 
             await controller.ListLinks();
 
@@ -70,9 +85,9 @@ namespace ShrtLy.UnitTest
         }
 
         [Test]
-        public async void GetShortLinks_AllLinksAreCorrect()
+        public async Task GetShortLinks_AllLinksAreCorrect()
         {
-            serviceMock.Setup(x => x.GetLinksAsync()).Returns(async () => await Task.Run(() => new List<LinkDto>()));
+            serviceMock.Setup(x => x.GetLinksAsync()).Returns(Task.FromResult(new List<LinkDto>().AsEnumerable()));
 
             await controller.ListLinks();
 
