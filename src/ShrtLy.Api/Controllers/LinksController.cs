@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using ShrtLy.BLL.Dtos;
 using ShrtLy.BLL.Services;
+using ShrtLy.BLL.Validators;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,8 +23,14 @@ namespace ShrtLy.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(LinkDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateLink(string url)
         {
+            if (!UrlValidator.IsValid(url))
+            {
+                return BadRequest();
+            }
+
             var createdLink = await _shorteningService.GenerateLinkAsync(url);
             var uri = new Uri(HttpContext.Request.GetDisplayUrl()).GetLeftPart(UriPartial.Path) + "/" + createdLink.Id;
             return Created(uri, createdLink);
